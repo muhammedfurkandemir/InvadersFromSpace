@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    private Queue<GameObject> poolObject;
+    private Queue<GameObject> pooledObject;
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private int poolSize;
+
     private void Awake()
     {
-        poolObject = new Queue<GameObject>();
+        pooledObject = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
             GameObject obj = Instantiate(objectPrefab);
             obj.SetActive(false);
-            poolObject.Enqueue(obj);
+            pooledObject.Enqueue(obj);
         }
     }
+
     public GameObject GetPooledObject()
     {
-        GameObject obj = poolObject.Dequeue();
+        GameObject obj = pooledObject.Dequeue();
         obj.SetActive(true);
-        poolObject.Enqueue(obj);
+        pooledObject.Enqueue(obj);
         return obj;
     }
-    
+
 }
